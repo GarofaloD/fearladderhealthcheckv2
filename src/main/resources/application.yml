@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: fear-ladder-healthcheck
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics,prometheus"
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true   # enables /actuator/health/{liveness|readiness}
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+info:
+  app:
+    name: ${spring.application.name}
+
+#We expose just enough endpoints, enable K8s-style liveness/readiness probes, and add a default application tag to all metrics.
